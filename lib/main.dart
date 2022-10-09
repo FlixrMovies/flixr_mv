@@ -5,20 +5,25 @@ import 'package:flixr_mv/get_it.dart';
 import 'package:flixr_mv/src/utils/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dropdown_alert/dropdown_alert.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
+import 'controllers/home.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final savedThemeMode = await AdaptiveTheme.getThemeMode();
   setup(mode: savedThemeMode ?? AdaptiveThemeMode.dark);
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  //Setting SystemUIOverlay
   SystemChrome.setSystemUIOverlayStyle(AppConstants.defaultSystemUi);
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge,
       overlays: [SystemUiOverlay.top]);
-  runApp(MyApp(savedThemeMode: savedThemeMode));
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider<HomeChangeNotifier>(create: (_) => HomeChangeNotifier()),
+  ], child: MyApp(savedThemeMode: savedThemeMode)));
 }
 
 class MyApp extends StatelessWidget {
@@ -52,6 +57,20 @@ class MyApp extends StatelessWidget {
                   ),
                   theme: theme.copyWith(
                     textTheme: GoogleFonts.syneTextTheme(),
+                  ),
+                  builder: (context, child) => Stack(
+                    children: [
+                      child!,
+                      DropdownAlert(
+                        avoidBottomInset: true,
+                        position: AlertPosition.BOTTOM,
+                        showCloseButton: true,
+                        titleStyle: GoogleFonts.syne(
+                            fontSize: 13.sp, fontWeight: FontWeight.w600),
+                        contentStyle: GoogleFonts.syne(
+                            fontSize: 11.sp, fontWeight: FontWeight.w500),
+                      )
+                    ],
                   ),
                   onGenerateRoute: AppRoutes.onGenerateRoute,
                 )));

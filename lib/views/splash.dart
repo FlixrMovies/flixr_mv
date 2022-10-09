@@ -11,46 +11,38 @@ import 'package:sizer/sizer.dart';
 class AppSplashScreen extends StatelessWidget {
   const AppSplashScreen({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
+    final appTheme = getIt<AppTheme>();
 
-    
-  final appTheme = getIt<AppTheme>();
-    
     return Scaffold(
         appBar: DefaultWidgets.statusAppBar(color: Colors.black),
         extendBodyBehindAppBar: true,
-        body: StatefulWrapper
-        
-        
-        
-        (
-          onInit: ()=> Future.delayed(
-            5.seconds,
-          () =>
-          getIt<NavigationService>().toAndClearRoute(routeName: '/start')),
-          child: 
-        Container(
-            alignment: Alignment.center,
-            color: appTheme.scaffoldBackgroundColor,
-            width: double.infinity,
-            height: double.infinity,
-            child: SizedBox(
-              width: 50.w,
-              child: TextLiquidFill(
-                text: 'Flixr.',
-                loadDuration: const Duration(seconds: 4),
-                waveColor: appTheme.primaryColor,
-                boxBackgroundColor: appTheme.scaffoldBackgroundColor,
-                textStyle: TextStyle(
-                  fontSize: 30.sp,
-                  fontFamily: "Gilroy",
-                  fontWeight: FontWeight.w500,
+        body: StatefulWrapper(
+          onInit: () => Future.delayed(
+              5.seconds,
+              () => getIt<NavigationService>()
+                  .toAndClearRoute(routeName: '/start')),
+          child: Container(
+              alignment: Alignment.center,
+              color: appTheme.scaffoldBackgroundColor,
+              width: double.infinity,
+              height: double.infinity,
+              child: SizedBox(
+                width: 50.w,
+                child: TextLiquidFill(
+                  text: 'Flixr.',
+                  loadDuration: const Duration(seconds: 4),
+                  waveColor: appTheme.primaryColor,
+                  boxBackgroundColor: appTheme.scaffoldBackgroundColor,
+                  textStyle: TextStyle(
+                    fontSize: 30.sp,
+                    fontFamily: "Gilroy",
+                    fontWeight: FontWeight.w500,
+                  ),
+                  boxHeight: 25.h,
                 ),
-                boxHeight: 25.h,
-              ),
-            )),
-      ));
+              )),
+        ));
   }
 }

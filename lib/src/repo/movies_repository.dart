@@ -3,6 +3,6 @@ import 'package:flixr_mv/src/models/resources/movie_api.dart';
 
 class MovieRepository {
   final MovieApiProvider movieApiProvider = MovieApiProvider();
-  Future<List<MovieItemModel>> getMovies({int? pages}) =>
+  Future<MovieResponseData?> getMovies({int? pages}) =>
       movieApiProvider.fetchMovieList();
 }

@@ -1,74 +1,60 @@
-// ignore_for_file: unnecessary_getters_setters
+class MovieResponseData {
+  List<Movies>? movies;
+  Movies? header;
 
-class MovieItemModel {
-  String? _name;
-  String? _image;
-  String? _link;
-  String? _id;
-  bool? _isSeries;
-  bool? _isMovie;
+  MovieResponseData({this.movies, this.header});
 
-  MovieItemModel(
-      {String? name,
-      String? image,
-      String? link,
-      String? id,
-      bool? isSeries,
-      bool? isMovie}) {
-    if (name != null) {
-      _name = name;
+  MovieResponseData.fromJson(Map<String, dynamic> json) {
+    if (json['movies'] != null) {
+      movies = <Movies>[];
+      json['movies'].forEach((v) {
+        movies!.add(Movies.fromJson(v));
+      });
     }
-    if (image != null) {
-      _image = image;
-    }
-    if (link != null) {
-      _link = link;
-    }
-    if (id != null) {
-      _id = id;
-    }
-    if (isSeries != null) {
-      _isSeries = isSeries;
-    }
-    if (isMovie != null) {
-      _isMovie = isMovie;
-    }
-  }
-
-  String? get name => _name;
-  set name(String? name) => _name = name;
-  String? get image => _image;
-  set image(String? image) => _image = image;
-  String? get link => _link;
-  set link(String? link) => _link = link;
-  String? get id => _id;
-  set id(String? id) => _id = id;
-  bool? get isSeries => _isSeries;
-  set isSeries(bool? isSeries) => _isSeries = isSeries;
-  bool? get isMovie => _isMovie;
-  set isMovie(bool? isMovie) => _isMovie = isMovie;
-
-  MovieItemModel.fromJson(Map<String, dynamic> json) {
-    _name = json['Name'];
-    _image = json['Image'];
-    _link = json['Link'];
-    _id = json['Id'];
-    _isSeries = json['isSeries'];
-    _isMovie = json['isMovie'];
+    header =
+        json['header'] != null ? Movies.fromJson(json['header']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['Name'] = _name;
-    data['Image'] = _image;
-    data['Link'] = _link;
-    data['Id'] = _id;
-    data['isSeries'] = _isSeries;
-    data['isMovie'] = _isMovie;
+    if (movies != null) {
+      data['movies'] = movies!.map((v) => v.toJson()).toList();
+    }
+    if (header != null) {
+      data['header'] = header!.toJson();
+    }
     return data;
   }
+}
 
-  static List<MovieItemModel> listFromJson(List<Map<String, dynamic>> decode) {    
-      return decode.map((e) => MovieItemModel.fromJson(e)).toList();
+class Movies {
+  String? name;
+  String? image;
+  String? link;
+  String? id;
+  bool? isSeries;
+  bool? isMovie;
+
+  Movies(
+      {this.name, this.image, this.link, this.id, this.isSeries, this.isMovie});
+
+  Movies.fromJson(Map<String, dynamic> json) {
+    name = json['Name'];
+    image = json['Image'];
+    link = json['Link'];
+    id = json['Id'];
+    isSeries = json['isSeries'];
+    isMovie = json['isMovie'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Name'] = name;
+    data['Image'] = image;
+    data['Link'] = link;
+    data['Id'] = id;
+    data['isSeries'] = isSeries;
+    data['isMovie'] = isMovie;
+    return data;
   }
 }

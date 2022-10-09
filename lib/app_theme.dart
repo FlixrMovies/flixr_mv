@@ -11,4 +11,8 @@ class AppTheme {
       !isDark ? Colors.white : Colors.black;
 
     Color  get primaryColor => const Color(0xFFF2C94C);
+
+  Color get greyColor => isDark ? Colors.grey.shade800 : Colors.grey.shade200;
+
+  Color get whiteTextColor => isDark ? Colors.white : Colors.black;
 }
